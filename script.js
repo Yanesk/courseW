@@ -335,8 +335,8 @@ function addCorrectDolls(playfield, count, targetDoll2, used) {
     const size = takeRandomSize(copySizes); 
     level2Expected.push(size);
 
-    const cell = takeFreeCell(used, COLUMNS2, ROWS2);
-    const el = createDoll(targetDoll2.file, size, cell);
+    const square = takeFreeSquare(used, COLUMNS2, ROWS2);
+    const el = createDoll(targetDoll2.file, size, square);
     playfield.appendChild(el);
   }
 
@@ -354,14 +354,14 @@ function addDistractors(playfield, distractCount, targetDoll2, used) {
 
     const size = takeRandomSize(copySizes);
 
-    const cell = takeFreeCell(used, COLUMNS2, ROWS2);
-    const el = createDoll(d.file, size, cell);
+    const square = takeFreeSquare(used, COLUMNS2, ROWS2);
+    const el = createDoll(d.file, size, square);
     playfield.appendChild(el);
   }
 }
 
 let dollCnt = 0;
-function createDoll(file, size, cell) {
+function createDoll(file, size, square) {
   const el = document.createElement('div');
   el.className = 'level2-doll';
 
@@ -369,8 +369,8 @@ function createDoll(file, size, cell) {
   el.dataset.size = size; 
 
   el.style.transform = `scale(${size})`;
-  el.style.gridColumn = cell.col;
-  el.style.gridRow = cell.row;
+  el.style.gridColumn = square.col;
+  el.style.gridRow = square.row;
 
   el.id = 'l2' + dollCnt++;
   dragDoll(el);
@@ -383,7 +383,7 @@ function takeRandomSize(arr) {
   return arr.splice(index, 1)[0]; 
 }
 
-function takeFreeCell(used, cols, rows) {
+function takeFreeSquare(used, cols, rows) {
   let col, row, key;
 
   do {
