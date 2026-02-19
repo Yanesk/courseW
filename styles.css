@@ -128,10 +128,10 @@ body {
   display:grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(8, 1fr);
-
-  /* aspect-ratio: 1 / 1; */
   margin: 0 auto;
   place-items: center;
+	max-height: 90vh;
+
 }
 
 .basket{
