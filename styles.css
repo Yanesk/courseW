@@ -1,0 +1,174 @@
+body {
+  margin:0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  
+}
+
+.board {
+  border: 3px solid black;
+  border-radius:10px;
+  padding:10px; 
+  
+}
+
+.stats{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.scene {  
+  display: none;
+}
+
+.scene.active {
+  display: block;
+  background: white;
+  border: 3px solid black;
+  border-radius:10px;
+  padding:10px; 
+
+}
+
+
+
+#stage {
+  font-size: 20px;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+.grid {
+	max-width: 600px;
+	max-height: 600px;
+	display: flex;
+	flex-wrap: wrap;
+	/* border: solid black 1px; */
+
+
+}
+
+.square {
+	height: 200px;
+	width: 200px;
+	border: solid black 1px;
+  box-sizing: border-box;
+}
+
+.doll {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size:contain;
+}
+
+
+
+
+
+
+
+
+/*-----------ур2.------------------*/
+
+
+
+
+
+.playfield{
+  width: 800px;
+  height: 400px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.slots{
+  width: 600px;
+  display: flex;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.slot{
+  flex: 1;
+  height: 140px;
+  border-bottom: 2px solid black;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.level2-doll{
+  width: 70px;        
+  height: 70px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  place-self: center;
+  transform-origin: center;
+}
+
+
+
+
+
+
+
+/* -----------ур3.------------------ */
+
+#level3.active {
+  display:grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+
+  /* aspect-ratio: 1 / 1; */
+  margin: 0 auto;
+  place-items: center;
+}
+
+.basket{
+  width: 100px;
+  height: 100px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+
+  font-size: 12px;
+  text-align: center;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  z-index: 1000;
+}
+
+
+
+
+
+
+.level3-doll {
+  width: 80px;
+  height: 80px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  animation: pulse 0.7s ease-in-out infinite;
+}
+
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
