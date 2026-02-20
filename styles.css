@@ -156,6 +156,8 @@ body {
   /* max-height: 90vh; */
   margin: 0 auto;
   place-items: center;
+	max-height: 90vh;
+
 }
 
 .basket{
@@ -186,4 +188,3 @@ body {
   50%  { transform: scale(1.15); }
   100% { transform: scale(1); }
 }
-
