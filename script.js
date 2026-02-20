@@ -1,6 +1,6 @@
 const playerName = localStorage.getItem('playerName');
 if (!playerName) {
-  window.location.href = './welcome.html';
+  window.location.href = './index.html';
 }
 
 
@@ -8,22 +8,31 @@ const squares = document.querySelectorAll('.square')
 const timeLeft = document.querySelector('#time-left')
 const score = document.querySelector('#score')
 
+const banner = document.querySelector('#banner')
+const continueBtn = document.querySelector('#continueBtn')
+const exitBtn = document.querySelector('#exitBtn')
+const bannerText1 = document.querySelector('.banner-text')
+const bannerText2 = document.querySelector('.banner-text_points')
+
 const hint = document.querySelector('#hint')
 const stage = document.querySelector('#stage')
 
+
+const LEVEL_GOAL = 10;
 const LEVELS = 3
 const ROUNDS_PER_LEVEL = 3
 const ROUND_TIMES = [15, 12, 10] 
+
 const ROUND_INTERVALS = [1000, 900, 800]
 
 const ROUND_INTERVALS2 = [700, 600, 500]
 const ROWS2 = 3;
 const COLUMNS2 = 6;
 
-const ROWS3 = 8
+const ROWS3 = 7
 const COLUMNS3 = 9
 
-const TASKS = ['Поймать матрешку двойным кликом: ','Расставьте заданные метрешки по возрастанию слева направо: ', 'Сложить матрешки в соответствующую корзину']
+const TASKS = ['Поймать матрешку двойным кликом: ','Расставить заданные метрешки по возрастанию слева направо: ', 'Сложить матрешки в соответствующую корзину']
 
 const DOLLS = [
   { file: 'doll-01.png', desc: 'Наряд: желтый, узор: цветы' },
@@ -45,6 +54,7 @@ localStorage.removeItem('startLevel');
 let round = 1
 
 
+let levelScore = 0;
 let result = 0
 let hitPosition = null
 let currentTime = ROUND_TIMES[0]
@@ -64,11 +74,14 @@ function pickRandom(arr) {
 
 function addScore(points) {
   result += points;
+  levelScore += points;  
+
   if (result < 0) result = 0;
+  if (levelScore < 0) levelScore = 0;
   score.textContent = result;
 }
 
-function flash(el, color, duration = 120) {
+function flash(el, color, duration = 80) {
   const baseColor = el.style.backgroundColor;
   el.style.backgroundColor = color;
   setTimeout(() => el.style.backgroundColor = baseColor, duration);
@@ -88,6 +101,9 @@ function saveLeader(score) {
   localStorage.setItem('leaders', JSON.stringify(leaders));
 }
 
+
+
+
 // ------------------
 
 
@@ -97,7 +113,7 @@ function showLevelScene() {
   document.querySelectorAll('.scene').forEach(s =>
      s.classList.remove('active'))
 
-  const active = document.getElementById(`level${level}`)
+  const active = document.getElementById('level' + level);
   if (active) active.classList.add('active')
 
   if (stage) stage.textContent = `Уровень ${level} . Раунд ${round}/${ROUNDS_PER_LEVEL}`
@@ -117,7 +133,7 @@ function showTask(target = null) {
 
 
 function startRoundTask() {
-  targetDoll = pickRandom(DOLLS)
+  targetDoll = pickRandom(DOLLS);
   showTask(targetDoll);
 }
 
@@ -135,24 +151,77 @@ function stopTimers() {
 
          // старт раунда
 function startLevelRound() {
+  if (round === 1) 
+    levelScore = 0;  
+
   showLevelScene()
   setupRoundTimers()
   stopTimers()
 
-  if (level === 1) startLevel1()
-  else if (level === 2) startLevel2()
-  else if (level === 3) startLevel3()
+  if (level === 1)
+     startLevel1()
+    
+  else if (level === 2) 
+    startLevel2()
+
+  else if (level === 3)
+     startLevel3()
 }
 
+
+//баннер между раундами
+function showBanner(text) {
+  
+  stopTimers();
+  clearInterval(countDownTimerId);
+   banner.classList.add('visible');
+   bannerText2.textContent = '';
+
+   bannerText1.textContent=text;
+
+  const left = Math.max(0, LEVEL_GOAL - levelScore);
+
+  if (left > 0) {
+    bannerText2.textContent =
+      'До успешного прохождения уровня осталось: ' + left;
+  }
+}
+
+
+
+continueBtn.addEventListener('click', ()=>{
+  banner.classList.remove('visible');
+  startLevelRound();
+  countDownTimerId = setInterval(countDown, 1000);
+
+});
+
+exitBtn.addEventListener('click', () => {
+  window.location.href = './results.html';
+});
 
 
 
 function nextRound() {
   round++;
 
+    let message = "Далее:Раунд " + round;
+
   if (round > ROUNDS_PER_LEVEL) {
+    if (levelScore < LEVEL_GOAL) {
+      result -= levelScore;     
+      if (result < 0) result = 0;   
+      score.textContent = result;
+
+      round = 1; // повторяем этот же уровень
+      levelScore = 0; 
+      showBanner(`Уровень ${level} не пройден. Попробуйте ещё раз!`);
+      return;
+  }
     round = 1;
     level++;
+    levelScore = 0;  
+    message = "Далее: Уровень " + level;
 
     // конец игры
     if (level > LEVELS) {
@@ -163,11 +232,13 @@ function nextRound() {
       return;
     }
 
-    // переход на следующий уровень
-    //showLevelTransition();
-  }
+    
 
-  startLevelRound();
+
+  }
+  showBanner(message);
+
+  //startLevelRound();
 }
 
 // --------------
@@ -233,10 +304,18 @@ function level1Click(square) {
   
   if (square.id !== hitPosition) return;
 
-  const correct = shownDoll.file === targetDoll.file;
 
-  addScore(correct ? +1 : -1);
-  flash(square, correct ? 'rgb(168, 221, 182)' : 'rgb(233, 186, 174)', 80);
+  if(shownDoll.file === targetDoll.file) {
+    addScore(1);
+    flash(square, 'rgb(168, 221, 182)');
+  }
+  else {
+    addScore(-1);
+    flash(square, 'rgb(233, 186, 174)');
+  }
+
+
+
   
   level1Step();
   restartTimer();
@@ -431,10 +510,17 @@ function dropDoll(slot) {
     const index = Number(slot.dataset.index);
 
     const size = Number(doll.dataset.size);
-    const correct = size === level2Expected[index];
 
-    addScore(correct ? 1 : -1);
-    flash(slot, correct ? 'rgb(200,230,200)' : 'rgb(233,186,174)', 180);
+    if (size === level2Expected[index]){
+      addScore(1);
+      flash(slot, 'rgb(168, 221, 182)');
+    }
+      else {
+      addScore(-1);
+      flash(slot, 'rgb(233, 186, 174)');
+    }
+
+
 
     checkSlotsFilled();
   });
@@ -447,7 +533,9 @@ function checkSlotsFilled() {
     if (!slot.firstElementChild) return;
   }
 
-  setTimeout(() => nextRound(), 300);
+  currentTime = 1; // заканчиваем раунд
+
+  // setTimeout(() => nextRound(), 300);
 }
 
 
@@ -484,6 +572,7 @@ function checkHitBasket() {
 
   if (dollPos.col === targetCol) {
     addScore(1);
+
   } else {
     addScore(-1);
   }
@@ -563,12 +652,14 @@ function showBasket(cols) {
 }
 
 
+
 //движение вниз
 function moveDown() {
   if (!fallingEl) return;
 
  
   if (dollPos.row === ROWS3) {
+
     checkHitBasket();
     showRandomDoll();
     return;
@@ -634,12 +725,19 @@ function startLevel3() {
 
 
 
+
+
+
+
+
+
 //общий таймер
 function countDown() {
   currentTime--
   if (timeLeft) timeLeft.textContent = currentTime
 
   if (currentTime <= 0) {
+
     nextRound()
   }
 }

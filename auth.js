@@ -15,13 +15,13 @@ function saveName() {
 
 loginBtn.addEventListener('click', () => {
   if (!saveName()) return;
-  window.location.href = './index.html';
+  window.location.href = './game.html';
 });
 
 nameInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     if (!saveName()) return;
-    window.location.href = './index.html';
+    window.location.href = './game.html';
   }
 });
 
@@ -30,6 +30,6 @@ function startFrom(level) {
   if (!saveName()) return;
 
   localStorage.setItem('startLevel', level);
-  window.location.href = './index.html';
+  window.location.href = './game.html';
 }
 

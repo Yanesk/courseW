@@ -1,57 +1,24 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Matryoshka</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="auth.css">
 </head>
 <body>
-  <div class="board">
-    <div class="stats">
-      <p>Баллы: <span id="score">0</span></p> 
-      <div id="stage"></div>
-      <p>Оставшееся время: <span id="time-left">60</span></p>
-      
+    <div class="auth">
+         <h2>Вход</h2>
+         <input id="nameInput" type="text" placeholder="Введите имя" maxlength="20">
+        <button id="loginBtn">Войти</button>
+        <div class="check_levels">
+            <button onclick="startFrom(1)">Уровень 1</button>
+            <button onclick="startFrom(2)">Уровень 2</button>
+            <button onclick="startFrom(3)">Уровень 3</button>
+        </div>
     </div>
 
     
-
-    
-
-
-    <div id="level1" class="scene active">
-    <div class="grid">
-      <div class="square" id="1"></div>
-      <div class="square" id="2"></div>
-      <div class="square" id="3"></div>
-      <div class="square" id="4"></div>
-      <div class="square" id="5"></div>
-      <div class="square" id="6"></div>
-      <div class="square" id="7"></div>
-      <div class="square" id="8"></div>
-      <div class="square" id="9"></div>
-    </div>
-  </div>
-  
-
-  
-  <div id="level2" class="scene">
-
-
-    <div id="slots" class="slots"></div>
-    <div id="playfield" class="playfield"></div>
-  </div>
-
-
-
-  <div id="level3" class="scene"></div>
-
-  <p id = "task"> <span id="hint"></span></p>
-
-</div>
-
-
-<script src = "script.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>

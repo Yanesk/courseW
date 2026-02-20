@@ -21,11 +21,11 @@
   }
 
   document.getElementById('playAgainBtn').onclick = () => {
-    window.location.href = './index.html';
+    window.location.href = './game.html';
   };
 
   document.getElementById('changeNameBtn').onclick = () => {
     localStorage.removeItem('playerName');
-    window.location.href = './welcome.html';
+    window.location.href = './index.html';
   };
 
