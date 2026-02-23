@@ -6,7 +6,9 @@ const avatars = document.querySelectorAll('.avatar');
 
 const startSound = new Audio('./assets/sounds/start.mp3')
 
-
+document.addEventListener('click', () => {
+  startSound.play().catch(e => console.log("Блокировка автовоспроизведения:", e));
+});
 
 function playSound(sound) {
   sound.currentTime = 0;

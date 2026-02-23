@@ -55,6 +55,8 @@ const COLUMNS2 = 6;
 const ROWS3 = 7;
 const COLUMNS3 = 9;
 
+
+
 const TASKS = ['Поймать матрешку двойным кликом: ','Расставить заданные метрешки по возрастанию слева направо: ', 'Сложить матрешки в соответствующую корзину']
 
 const DOLLS = [
@@ -86,6 +88,14 @@ let countDownTimerId = null  // общий таймер секунд
 let timerId = null          
 
 let resultSound = null
+
+let volume = 0.3
+
+popSound.volume = volume;
+successSound.volume = volume;
+failSound.volume = volume;
+tictacSound.volume = 1;
+moveSound.volume = volume;
 
 
 // для ур1
@@ -134,7 +144,7 @@ function saveLeader(score) {
 //звуки
 
 function playSound(sound) {
-  sound.volume = 0.5;
+ 
   sound.currentTime = 0;
   sound.play();
 }
@@ -272,7 +282,6 @@ function nextRound() {
       levelScore = 0; 
       resultSound = failSound;
       if (resultSound) {
-        resultSound.volume = 0.5;
         playSound(resultSound);
       }
       showBanner(`Уровень ${level} не пройден. Попробуйте ещё раз!`);
@@ -295,7 +304,6 @@ function nextRound() {
     }
   }
   if (resultSound) {
-     resultSound.volume = 0.5;
       playSound(resultSound); 
     }
   showBanner(message);
@@ -793,7 +801,6 @@ function countDown() {
   if (timeLeft) timeLeft.textContent = currentTime
 
   if(currentTime == 3){
-    tictacSound.volume = 0.5;
     playSound(tictacSound); 
   }
 
