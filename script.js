@@ -215,6 +215,9 @@ continueBtn.addEventListener('click', ()=>{
 });
 
 exitBtn.addEventListener('click', () => {
+  stopTimers();
+  clearInterval(countDownTimerId);
+  saveLeader(result); 
   window.location.href = './results.html';
 });
 
