@@ -55,7 +55,7 @@
   border: var(--border-bold);
   border-radius:var(--radius-mid);
   padding: var(--padding-sm);
-  background: url(./assets/pattern2.png);
+  background: var(--background-pattern);
   background-size: cover;
 
 }
@@ -71,8 +71,7 @@
   text-align: center; 
   background: var(--background-pic);
   background-color: var(--color-bcg-bright);
-/*   
-  z-index: 1000; */
+
 
 }
 

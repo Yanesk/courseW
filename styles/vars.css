@@ -48,8 +48,8 @@
   --board-h: 100vh;
 
   /* фоны */
-  --bg-frame: url(./assets/frame.png);
-  --background-pattern: url(./assets/pattern2.png);
-  --background-pic: url(./assets/patterm-transp-opac.png);
+
+  --background-pattern: url(../assets/pattern2.png);
+  --background-pic: url(../assets/patterm-transp-opac.png);
 
 }

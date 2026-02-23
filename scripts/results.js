@@ -1,6 +1,6 @@
 
   const list = document.getElementById('leadersList');
-  const endSound = new Audio('./assets/sounds/start.mp3')
+  const endSound = new Audio('../assets/sounds/start.mp3')
 
 
 let leaders = JSON.parse(localStorage.getItem('leaders')) || [];
@@ -34,11 +34,11 @@ if (endSound) {
   }
 
   document.getElementById('playAgainBtn').onclick = () => {
-    window.location.href = './game.html';
+    window.location.href = '../pages/game.html';
   };
 
   document.getElementById('changeNameBtn').onclick = () => {
     localStorage.removeItem('playerName');
-    window.location.href = './index.html';
+    window.location.href = '../index.html';
   };
 

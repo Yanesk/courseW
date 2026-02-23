@@ -1,6 +1,6 @@
 const playerName = localStorage.getItem('playerName');
 if (!playerName) {
-  window.location.href = './index.html';
+  window.location.href = '../index.html';
 }
 
 
@@ -24,12 +24,12 @@ const stage = document.querySelector('#stage')
 const avatarEl = document.querySelector('.player-avatar')
 const avatar = localStorage.getItem('playerAvatar')
 
-const startSound = new Audio('./assets/sounds/start.mp3')
-const successSound = new Audio('./assets/sounds/success.wav');
-const failSound = new Audio('./assets/sounds/fail.mp3');
-const tictacSound = new Audio('./assets/sounds/clock.mp3');
-const popSound = new Audio('./assets/sounds/pop.mp3');
-const moveSound = new Audio('./assets/sounds/moveSound.mp3');
+const startSound = new Audio('../assets/sounds/start.mp3')
+const successSound = new Audio('../assets/sounds/success.wav');
+const failSound = new Audio('../assets/sounds/fail.mp3');
+const tictacSound = new Audio('../assets/sounds/clock.mp3');
+const popSound = new Audio('../assets/sounds/pop.mp3');
+const moveSound = new Audio('../assets/sounds/moveSound.mp3');
 
 
 
@@ -257,7 +257,7 @@ exitBtn.addEventListener('click', () => {
   stopTimers();
   clearInterval(countDownTimerId);
   saveLeader(result); 
-  window.location.href = './results.html';
+  window.location.href = '../pages/results.html';
 });
 
 
@@ -299,7 +299,7 @@ function nextRound() {
       clearInterval(countDownTimerId);
       clearInterval(timerId);
       saveLeader(result);
-      window.location.href = './results.html';
+      window.location.href = '../pages/results.html';
       return;
     }
   }
@@ -343,7 +343,7 @@ function chooseDoll() {
 
 function showDoll(doll, square) {
   square.classList.add('doll');
-  square.style.backgroundImage = `url(./assets/img/${doll.file})`;
+  square.style.backgroundImage = `url(../assets/img/${doll.file})`;
   hitPosition = square.id;
 }
 
@@ -513,7 +513,7 @@ function createDoll(file, size, square) {
   const el = document.createElement('div');
   el.className = 'level2-doll';
 
-  el.style.backgroundImage = `url(./assets/img/${file})`;
+  el.style.backgroundImage = `url(../assets/img/${file})`;
   el.dataset.size = size; 
 
   el.style.transform = `scale(${size})`;
@@ -693,7 +693,7 @@ function showRandomDoll() {
 
   const el = document.createElement('div');
   el.classList.add('level3-doll'); 
-  el.style.backgroundImage = `url(./assets/img/${doll.file})`;
+  el.style.backgroundImage = `url(../assets/img/${doll.file})`;
   el.style.gridColumn = dollPos.col;
   el.style.gridRow = dollPos.row;
 
@@ -714,7 +714,7 @@ function showBasket(cols) {
     const basket = document.createElement('div');
 
     basket.classList.add('basket');
-    basket.style.backgroundImage = `url(./assets/img/basket.png)`; 
+    basket.style.backgroundImage = `url(../assets/img/basket.png)`; 
 
     basket.textContent = randomDollsArr[i].desc;
 

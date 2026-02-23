@@ -4,7 +4,7 @@ const loginBtn = document.getElementById('loginBtn');
 const avatar = document.querySelector('.avatar');
 const avatars = document.querySelectorAll('.avatar');
 
-const startSound = new Audio('./assets/sounds/start.mp3')
+const startSound = new Audio('../assets/sounds/start.mp3')
 
 document.addEventListener('click', () => {
   startSound.play().catch(e => console.log("Блокировка автовоспроизведения:", e));
@@ -49,13 +49,13 @@ function saveName() {
 
 loginBtn.addEventListener('click', () => {
   if (!saveName()) return;
-  window.location.href = './game.html';
+  window.location.href = '../pages/game.html';
 });
 
 nameInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     if (!saveName()) return;
-    window.location.href = './game.html';
+    window.location.href = '../pages/game.html';
   }
 });
 
@@ -64,6 +64,6 @@ function startFrom(level) {
   if (!saveName()) return;
 
   localStorage.setItem('startLevel', level);
-  window.location.href = './game.html';
+  window.location.href = '../pages/game.html';
 }
 
