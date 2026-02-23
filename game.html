@@ -4,64 +4,74 @@
 <head>
   <meta charset="utf-8">
   <title>Matryoshka</title>
-  <link rel="stylesheet" href="styles.css">
+   <link rel="stylesheet" href="vars.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="game.css">
 </head>
 <body>
   <div class="board">
+    <div class="game-info">
+      <div class="player-container">
+        <img class="player-avatar" alt="avatar">
+        <p class="player_name">Игрок: <span class="player"></span></p>
+      </div>
+      <p id="stage"></p>
+    </div>
+    
+
     <div class="stats">
       <p>Баллы: <span id="score">0</span></p> 
-      <div id="stage"></div>
+      
       <p>Оставшееся время: <span id="time-left">60</span></p>
       
     </div>
 
-    
+  
 
-    
-
-
-    <div id="level1" class="scene active">
-    <div class="grid">
-      <div class="square" id="1"></div>
-      <div class="square" id="2"></div>
-      <div class="square" id="3"></div>
-      <div class="square" id="4"></div>
-      <div class="square" id="5"></div>
-      <div class="square" id="6"></div>
-      <div class="square" id="7"></div>
-      <div class="square" id="8"></div>
-      <div class="square" id="9"></div>
+    <div id="level1" class="field active">
+      <div class="grid">
+        <div class="square" id="1"></div>
+        <div class="square" id="2"></div>
+        <div class="square" id="3"></div>
+        <div class="square" id="4"></div>
+        <div class="square" id="5"></div>
+        <div class="square" id="6"></div>
+        <div class="square" id="7"></div>
+        <div class="square" id="8"></div>
+        <div class="square" id="9"></div>
+      </div>
     </div>
-  </div>
   
 
   
-  <div id="level2" class="scene">
-
-
+  <div id="level2" class="field">
     <div id="slots" class="slots"></div>
-    <div id="playfield" class="playfield"></div>
+    <div id="level2-grid" class="level2-grid"></div>
   </div>
 
 
 
-  <div id="level3" class="scene"></div>
-
-  <p id = "task"> <span id="hint"></span></p>
-
-</div>
-
-<div id = "banner" class="scene">
-  <div class="banner-content">
-    <p class="banner-text"></p>
-    <p class="banner-text_points"></p>
-    <div class="banner-buttons">
-      <button id="continueBtn">Продолжить</button>
-      <button id="exitBtn">Выход</button>
-    </div>
+  <div id="level3" class="field">
+    <div id="level3-grid" class="level3-grid"></div>
   </div>
- 
+
+  <div id = "banner" class="field">
+    <div class="banner-content window-content">
+      <p class="banner-text"></p>
+      <p class="banner-text_points"></p>
+      <div class="banner-buttons buttons-container">
+        <button id="continueBtn">Продолжить</button>
+        <button id="exitBtn">Выход</button>
+      </div>
+    </div> 
 </div>
+
+  <p id="hint"></p>
+  <p id="hint-desc"></p>
+
+</div>
+
+
 
 
 

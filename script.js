@@ -4,6 +4,8 @@ if (!playerName) {
 }
 
 
+const player = document.querySelector('.player')
+
 const squares = document.querySelectorAll('.square')
 const timeLeft = document.querySelector('#time-left')
 const score = document.querySelector('#score')
@@ -15,22 +17,32 @@ const bannerText1 = document.querySelector('.banner-text')
 const bannerText2 = document.querySelector('.banner-text_points')
 
 const hint = document.querySelector('#hint')
+const hintDesc = document.querySelector('#hint-desc')
 const stage = document.querySelector('#stage')
 
+
+const avatarEl = document.querySelector('.player-avatar')
+const avatar = localStorage.getItem('playerAvatar')
+
+if (avatarEl) {
+  avatarEl.src = avatar;
+}
+
+player.textContent = playerName;
 
 const LEVEL_GOAL = 10;
 const LEVELS = 3
 const ROUNDS_PER_LEVEL = 3
-const ROUND_TIMES = [15, 12, 10] 
+const ROUND_TIMES = [35, 30, 25] 
 
 const ROUND_INTERVALS = [1000, 900, 800]
 
-const ROUND_INTERVALS2 = [700, 600, 500]
+const ROUND_INTERVALS3 = [700, 600, 500]
 const ROWS2 = 3;
 const COLUMNS2 = 6;
 
-const ROWS3 = 7
-const COLUMNS3 = 9
+const ROWS3 = 7;
+const COLUMNS3 = 9;
 
 const TASKS = ['Поймать матрешку двойным кликом: ','Расставить заданные метрешки по возрастанию слева направо: ', 'Сложить матрешки в соответствующую корзину']
 
@@ -56,13 +68,18 @@ let round = 1
 
 let levelScore = 0;
 let result = 0
-let hitPosition = null
+
 let currentTime = ROUND_TIMES[0]
-let timerId = null          
 let countDownTimerId = null  // общий таймер секунд
 
+let timerId = null          
+
+
+// для ур1
+let hitPosition = null
 let targetDoll = null
 let shownDoll = null
+
 
 
 // вспомогательные ф-ии
@@ -109,38 +126,38 @@ function saveLeader(score) {
 
 // общие ф-ии раунда
 
-function showLevelScene() {
-  document.querySelectorAll('.scene').forEach(s =>
-     s.classList.remove('active'))
+function showLevelField() {
+  document.querySelectorAll('.field').forEach(f =>
+     f.classList.remove('active'))
 
   const active = document.getElementById('level' + level);
-  if (active) active.classList.add('active')
+  active.classList.add('active')
 
-  if (stage) stage.textContent = `Уровень ${level} . Раунд ${round}/${ROUNDS_PER_LEVEL}`
+  stage.innerHTML = `Уровень ${level}. Раунд ${round}/${ROUNDS_PER_LEVEL}`
 }
 
-function showTask(target = null) {
-  if (!hint) return;
 
+
+function showTask(target = null) {
+  
   let text = TASKS[level - 1];
-  if (level === 3) {
-    hint.textContent = text;
+  hint.textContent = text;
+
+  if (target === null) {
+
+    hintDesc.textContent = '';
+
   } else {
-    hint.textContent = text + (target ? target.desc : '');
+    hintDesc.textContent =target.desc
   }
 }
 
 
 
-function startRoundTask() {
-  targetDoll = pickRandom(DOLLS);
-  showTask(targetDoll);
-}
 
 function setupRoundTimers() {
   currentTime = ROUND_TIMES[round - 1];
-  if (timeLeft)
-     timeLeft.textContent = currentTime;
+  timeLeft.textContent = currentTime;
 }
 
 
@@ -154,7 +171,7 @@ function startLevelRound() {
   if (round === 1) 
     levelScore = 0;  
 
-  showLevelScene()
+  showLevelField()
   setupRoundTimers()
   stopTimers()
 
@@ -174,6 +191,7 @@ function showBanner(text) {
   
   stopTimers();
   clearInterval(countDownTimerId);
+  
    banner.classList.add('visible');
    bannerText2.textContent = '';
 
@@ -183,7 +201,7 @@ function showBanner(text) {
 
   if (left > 0) {
     bannerText2.textContent =
-      'До успешного прохождения уровня осталось: ' + left;
+      'До успешного прохождения уровня осталось набрать баллов: ' + left;
   }
 }
 
@@ -205,19 +223,22 @@ exitBtn.addEventListener('click', () => {
 function nextRound() {
   round++;
 
-    let message = "Далее:Раунд " + round;
+  let message = "Далее: Раунд " + round;
 
   if (round > ROUNDS_PER_LEVEL) {
     if (levelScore < LEVEL_GOAL) {
       result -= levelScore;     
-      if (result < 0) result = 0;   
+      if (result < 0) {
+        result = 0; 
+      }
+          
       score.textContent = result;
 
       round = 1; // повторяем этот же уровень
       levelScore = 0; 
       showBanner(`Уровень ${level} не пройден. Попробуйте ещё раз!`);
       return;
-  }
+    }
     round = 1;
     level++;
     levelScore = 0;  
@@ -231,14 +252,8 @@ function nextRound() {
       window.location.href = './results.html';
       return;
     }
-
-    
-
-
   }
   showBanner(message);
-
-  //startLevelRound();
 }
 
 // --------------
@@ -292,9 +307,12 @@ function restartTimer() {
   timerId = setInterval(level1Step, ROUND_INTERVALS[round - 1]);
 }
 
-//
+
 function startLevel1() {
-  startRoundTask(); 
+
+  targetDoll = pickRandom(DOLLS);
+  showTask(targetDoll);
+
   level1Step();      
   restartTimer();
 }
@@ -307,16 +325,13 @@ function level1Click(square) {
 
   if(shownDoll.file === targetDoll.file) {
     addScore(1);
-    flash(square, 'rgb(168, 221, 182)');
+    flash(square, 'var(--color-success)');
   }
   else {
     addScore(-1);
-    flash(square, 'rgb(233, 186, 174)');
+    flash(square, 'var(--color-failure)');
   }
 
-
-
-  
   level1Step();
   restartTimer();
 }
@@ -339,7 +354,7 @@ squares.forEach(square => {
 const SIZES = [0.6,0.7,0.8,0.9,1,1.1,1.2,1.3];
 
 
-let level2Expected = []; // какие размеры должны быть в слотах 
+let level2Expected = []; // какие размеры должны быть
 
 
 function startLevel2() {
@@ -371,16 +386,15 @@ function distractorsCount(round) {
 
 
 function makeSlots(count) {
-  const slotsEl = document.querySelector('#slots');
-  if (!slotsEl) return;
+  const slots = document.querySelector('#slots');
 
-  slotsEl.innerHTML = '';
+  slots.innerHTML = '';
 
   for (let i = 0; i < count; i++) {
     const slot = document.createElement('div');
     slot.className = 'slot';
     slot.dataset.index = i;
-    slotsEl.appendChild(slot);
+    slots.appendChild(slot);
 
     dropDoll(slot); //  для перетаскивания
   }
@@ -390,10 +404,9 @@ function makeSlots(count) {
 
 // генерация поля с матрешк
 function showDolls(count, targetDoll2) {
-  const playfield = document.querySelector('#playfield');
-  if (!playfield) return;
+  const lev2Grid = document.querySelector('#level2-grid');
 
-  playfield.innerHTML = '';
+  lev2Grid.innerHTML = '';
   level2Expected = [];
 
   const used = new Set();
@@ -401,13 +414,13 @@ function showDolls(count, targetDoll2) {
 
   const distractCount = distractorsCount(round);
   
-  addCorrectDolls(playfield, count, targetDoll2, used);
-  addDistractors(playfield, distractCount, targetDoll2, used);
+  addCorrectDolls(lev2Grid, count, targetDoll2, used);
+  addDistractors(lev2Grid, distractCount, targetDoll2, used);
 }
 
 
 
-function addCorrectDolls(playfield, count, targetDoll2, used) {
+function addCorrectDolls(lev2Grid, count, targetDoll2, used) {
   const copySizes = [...SIZES];
 
   for (let i = 0; i < count; i++) {
@@ -416,13 +429,13 @@ function addCorrectDolls(playfield, count, targetDoll2, used) {
 
     const square = takeFreeSquare(used, COLUMNS2, ROWS2);
     const el = createDoll(targetDoll2.file, size, square);
-    playfield.appendChild(el);
+    lev2Grid.appendChild(el);
   }
 
   level2Expected.sort((a, b) => a - b);
 }
 
-function addDistractors(playfield, distractCount, targetDoll2, used) {
+function addDistractors(lev2Grid, distractCount, targetDoll2, used) {
   const copySizes = [...SIZES];
 
   for (let i = 0; i < distractCount; i++) {
@@ -435,7 +448,7 @@ function addDistractors(playfield, distractCount, targetDoll2, used) {
 
     const square = takeFreeSquare(used, COLUMNS2, ROWS2);
     const el = createDoll(d.file, size, square);
-    playfield.appendChild(el);
+    lev2Grid.appendChild(el);
   }
 }
 
@@ -513,11 +526,11 @@ function dropDoll(slot) {
 
     if (size === level2Expected[index]){
       addScore(1);
-      flash(slot, 'rgb(168, 221, 182)');
+      flash(slot, 'var(--color-success)');
     }
       else {
       addScore(-1);
-      flash(slot, 'rgb(233, 186, 174)');
+      flash(slot, 'var(--color-error)');
     }
 
 
@@ -547,7 +560,7 @@ function checkSlotsFilled() {
 
 // УРОВЕНЬ 3  
 
-const level3 = document.getElementById('level3');
+const lev3Grid = document.querySelector('#level3-grid');
 
 const POSITIONS = {
   3: [2, 5, 8],
@@ -568,7 +581,7 @@ function checkHitBasket() {
   if (!basketCols) return;
 
   const targetCol = basketCols[currentIndex]; 
-  if (targetCol == null) return;
+
 
   if (dollPos.col === targetCol) {
     addScore(1);
@@ -582,7 +595,8 @@ function checkHitBasket() {
 
 
 function clearBaskets() {
-  level3.querySelectorAll('.basket').forEach(basket => basket.remove());
+  lev3Grid.querySelectorAll('.basket').forEach(basket => 
+    basket.remove());
 }
 
 
@@ -600,8 +614,11 @@ function makeRandomArr(arr, count) {
 
 
 function clearDoll() {
-  level3.querySelectorAll('.level3-doll').forEach(el =>
+  lev3Grid.querySelectorAll('.level3-doll').forEach(el =>
      el.remove());
+  fallingEl = null;
+  dollPos = null;
+
 }
 
 function showRandomDoll() {
@@ -610,7 +627,7 @@ function showRandomDoll() {
    currentIndex = Math.floor(Math.random() * randomDollsArr.length);
   const doll = randomDollsArr[currentIndex];
  
-  if (!doll) return;
+
   const col = 1 + Math.floor(Math.random() * COLUMNS3); 
 
   dollPos =  { col, row: 1 };
@@ -625,7 +642,7 @@ function showRandomDoll() {
 
  
 
-  level3.appendChild(el);
+  lev3Grid.appendChild(el);
   fallingEl = el;
 }
 
@@ -647,7 +664,7 @@ function showBasket(cols) {
     basket.style.gridColumn = col;
     basket.style.gridRow = ROWS3;
 
-    level3.appendChild(basket);
+    lev3Grid.appendChild(basket);
   });
 }
 
@@ -712,23 +729,10 @@ function startLevel3() {
   showRandomDoll();
 
   clearInterval(timerId);
-  timerId = setInterval(moveDown, ROUND_INTERVALS2[round - 1]);
+  timerId = setInterval(moveDown, ROUND_INTERVALS3[round - 1]);
 
   showTask();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //общий таймер
@@ -742,7 +746,11 @@ function countDown() {
   }
 }
 
-//   старт
+  // старт
  countDownTimerId = setInterval(countDown, 1000);
  startLevelRound();
 
+
+// level = 1;
+// round = 1;
+// startLevelRound();

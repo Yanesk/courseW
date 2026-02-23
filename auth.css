@@ -1,41 +1,51 @@
-body{
-    margin:0;
-    padding: 0;
-    padding-top: 150px;
+ .auth-container{
+
     display: flex;
-    flex-direction: column;
     align-items: center;
-    height: 100vh;
-}
+    justify-content: center;
+    height: var(--board-h);
+} 
 
-.auth{
-    width: 400px;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    border: 3px solid black;
-    border-radius: 10px;
-    padding: 20px;
-
-}
 
 #nameInput{
     padding: 10px;
     width: 200px;
 }
 
-#loginBtn {
-    margin-top: 20px;
-    padding: 10px 20px;
-
-}
-
-.check_levels{
-    margin-top: 50px;
+.avatar-container{
     display: flex;
-    gap: 10px;
+    gap: var(--gap-sm);
 }
 
-.check_levels button{
-    padding: 10px 20px;
+.avatar{
+    
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    transition:  0.3s;
 }
+
+.avatar-click {
+    transform: scale(1.2);
+    
+}
+.avatar:hover{
+    cursor: pointer;
+    animation: sway 1s linear infinite;
+}
+
+@keyframes sway {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(5deg); }
+  50%  { transform: rotate(0deg); }
+  75%  { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+
+
+
+
+

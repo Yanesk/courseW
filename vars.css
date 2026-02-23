@@ -1,0 +1,55 @@
+:root{
+  
+  --text-color: rgb(58,85,63);
+
+  --border-color: rgb(70,112,77);
+  
+  --color-board: rgb(252,247,238);
+  --color-bcg-bright: beige;
+  --color-banner:  rgb(247, 230, 197);
+
+
+  --color-success: rgb(164, 221, 180);
+  --color-error: rgb(230, 184, 173);
+  
+  --color-btns: rgb(247, 247, 229);
+
+  --radius-sm: 8px;
+  --radius-mid: 10px;
+  --radius-lg: 50px;
+
+ 
+
+  --border-bold: 3px solid var(--border-color);
+  --border-thin: 1px solid var(--border-color);
+
+  --padding-sm: 10px;
+  --padding-mid: 15px;
+  --padding-lg: 20px;
+
+  --gap-sm: 10px;
+  --gap-mid: 12px;
+  --gap-lg: 20px;
+  
+  
+  
+  
+  
+  --font-base: 16px;    
+  --font-lg: 20px;         /* для #hint, player */
+  --font-small: 12px;      /* для корзин */
+  
+  
+  
+  
+  
+  
+
+  --board-h: 100vh;
+
+  /* фоны */
+  --bg-frame: url(./assets/frame.png);
+  --background-pattern: url(./assets/pattern2.png);
+  --background-pic: url(./assets/patterm-transp-opac.png);
+
+}

@@ -1,7 +1,20 @@
 
 const nameInput = document.getElementById('nameInput');
 const loginBtn = document.getElementById('loginBtn');
+const avatar = document.querySelector('.avatar');
+const avatars = document.querySelectorAll('.avatar');
 
+let selectedAvatar = localStorage.getItem('playerAvatar') || '';
+
+avatars.forEach(img => {
+  img.addEventListener('click', () => {
+     avatars.forEach(a => a.classList.remove('avatar-click'));
+
+    img.classList.add('avatar-click');
+    localStorage.setItem('playerAvatar', img.src);
+
+  });
+});
 
 function saveName() {
   const name = nameInput.value.trim();

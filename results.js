@@ -5,17 +5,18 @@
 
   // по убыванию
   leaders.sort((a, b) => b.score - a.score);
+  const topLeaders = leaders.slice(0, 10);
 
   list.innerHTML = '';
 
-  if (leaders.length === 0) {
+  if (topLeaders.length === 0) {
     const li = document.createElement('li');
     li.textContent = 'Нет результатов';
     list.appendChild(li);
   } else {
-    leaders.forEach(row => {
+    topLeaders.forEach(row => {
       const li = document.createElement('li');
-      li.textContent = row.name + ' — ' + row.score;
+      li.textContent = row.name + ': ' + row.score;
       list.appendChild(li);
     });
   }

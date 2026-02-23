@@ -1,0 +1,199 @@
+/*основной контейнер  */
+
+.board {
+  box-sizing: border-box;
+  background: var(--color-board);
+  border: var(--border-bold);
+  border-radius: var(--radius-lg);
+  padding: 10px 50px;
+  text-align: center;
+
+   height: var(--board-h);
+}
+
+.player-container {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.player-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  object-position: top;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.stats{
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats p{
+  margin: 5px;
+
+}
+
+
+/* поля и баннер */
+
+.field {  
+  display: none;
+}
+
+.field.active {
+  display: block;
+
+  border: var(--border-bold);
+  border-radius:var(--radius-mid);
+  padding: var(--padding-sm);
+  background: url(./assets/pattern2.png);
+  background-size: cover;
+
+}
+
+.visible{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  position: absolute; 
+  inset: 0;  
+
+  text-align: center; 
+  background: var(--background-pic);
+  background-color: var(--color-bcg-bright);
+/*   
+  z-index: 1000; */
+
+}
+
+#hint, .player{
+  font-size: var(--font-lg);
+}
+
+
+
+/*ур1*/
+
+
+.grid {
+	max-width: 600px;
+	max-height: 600px;
+	display: flex;
+	flex-wrap: wrap;
+	/* border: solid black 1px; */
+
+
+}
+
+.square {
+	height: 200px;
+	width: 200px;
+	border: solid black 1px;
+
+}
+
+.doll {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size:contain;
+}
+
+
+/* --------- */
+
+
+/*ур2*/
+
+
+.level2-grid{
+  width: 900px;
+  height: 500px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: var(--gap-sm);
+}
+
+.slots{
+  max-width: 850px;
+  display: flex;
+  margin: 0 auto;
+  gap: var(--gap-sm);
+}
+
+.slot{
+  flex: 1;
+  height: 130px;
+  border-bottom: 2px solid black;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.level2-doll{
+  width: 80px;        
+  height: 80px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  place-self: center;
+  transform-origin: center;
+}
+
+
+
+
+
+
+
+/* ур3*/
+
+.level3-grid {
+  display:grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+
+  place-items: center;
+
+}
+
+.basket{
+  width: 100px;
+  height: 100px;
+  
+  font-size: var( --font-small);
+  text-align: center;
+
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+
+}
+
+.level3-doll {
+  width: 60px;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  animation: pulse 0.7s ease-in-out infinite;
+}
+
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
