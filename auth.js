@@ -7,6 +7,7 @@ const avatars = document.querySelectorAll('.avatar');
 const startSound = new Audio('./assets/sounds/start.mp3')
 
 
+
 let sound = startSound;
 
 let selectedAvatar = localStorage.getItem('playerAvatar') || '';
@@ -26,12 +27,15 @@ function playSound(sound) {
   sound.play();
 }
 
-if (sound) {
-  sound.volume = 0.5;
+// if (sound) {
+//   sound.volume = 0.5;
+//   playSound(sound);
+// }
+
+document.addEventListener('hover', () => {
+ sound.volume = 0.5;
   playSound(sound);
-}
-
-
+};
 
 
 function saveName() {
