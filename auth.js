@@ -7,6 +7,7 @@ const avatars = document.querySelectorAll('.avatar');
 const startSound = new Audio('./assets/sounds/start.mp3')
 
 
+
 let sound = startSound;
 
 let selectedAvatar = localStorage.getItem('playerAvatar') || '';
