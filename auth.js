@@ -22,23 +22,17 @@ avatars.forEach(img => {
   });
 });
 
-// function playSound(sound) {
-//   sound.currentTime = 0;
-//   sound.play();
-// }
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
 
-// if (sound) {
-//   sound.volume = 0.5;
-//   playSound(sound);
-// }
+if (sound) {
+  sound.volume = 0.5;
+  playSound(sound);
+}
 
 
-startSound.loop = true;
-startSound.volume = 0.4;
-
-document.addEventListener('pointerdown', () => {
-  music.play().catch(()=>{});
-}, { once: true });
 
 
 
