@@ -26,10 +26,17 @@ function playSound(sound) {
   sound.play();
 }
 
-if (sound) {
-  sound.volume = 0.5;
+// if (sound) {
+//   sound.volume = 0.5;
+//   playSound(sound);
+// }
+
+
+document.addEventListener('hover', () => {
+ sound.volume = 0.5;
   playSound(sound);
 }
+)
 
 
 
