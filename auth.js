@@ -8,6 +8,17 @@ const startSound = new Audio('./assets/sounds/start.mp3')
 
 
 
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+if (startSound) {
+  startSound.volume = 0.5;
+  playSound(startSound);
+}
+
+
 let sound = startSound;
 
 let selectedAvatar = localStorage.getItem('playerAvatar') || '';
@@ -21,20 +32,6 @@ avatars.forEach(img => {
 
   });
 });
-
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-}
-
-if (sound) {
-  sound.volume = 0.5;
-  playSound(sound);
-}
-
-
-
-
 
 
 
