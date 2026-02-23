@@ -81,6 +81,92 @@
 }
 
 
+/* анимация для перехода на новый ур */
+
+
+#banner .animation-container {
+  display: none;
+}
+
+
+#banner.level-up .animation-container {
+  width: 250px;
+  height: 200px;
+  padding: var(--padding-sm);
+  background: linear-gradient(to bottom, rgb(170, 220, 240) 70%, rgb(9, 105, 9) 30%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--radius-mid);
+}
+
+
+
+.sun{
+  position: absolute;
+  top: -35px;
+  left: -35px;
+  background-color: rgb(245, 245, 20);
+  border-radius: var(--radius-lg);
+  width: 40px;
+  height: 40px;
+  animation: move-sun 1s linear forwards; 
+}
+
+@keyframes move-sun{
+  to {transform: translate(60%, 60%);}
+}
+
+
+
+.rooster{
+  position: absolute;
+  left: -60px;
+  top: 100px;
+  width: 60px;
+  height: 60px;
+  animation: move-rooster 2s linear forwards;
+  animation-delay: 3s;
+}
+
+@keyframes move-rooster{
+  to {transform: translateX(150%);}
+}
+
+
+
+.anim-doll{
+  width: 70px;
+  height: 110px;
+  animation: grow 5s ease-in-out forwards;
+}
+
+@keyframes grow{
+  0%   { transform: scale(0.3); }
+  15%  { transform: scale(1); }
+  30%  { transform: translateY(-20%); }
+  40%  { transform: translateY(0); }
+  50%  { transform: translateY(-20%); }
+  60%  { transform: translateY(0); }
+  100% { transform: translateX(20%); }
+  
+}
+
+.animation-text{
+  opacity: 0;
+  transform: translateY(-50px) rotate(-20deg);
+  animation: show 3s ease forwards;
+  animation-delay: 2s;
+}
+
+@keyframes show {
+  to { opacity: 1; 
+
+      transform: translateY(-50px) rotate(-20deg);;
+  }
+}
 
 /*ур1*/
 
@@ -90,7 +176,7 @@
 	max-height: 600px;
 	display: flex;
 	flex-wrap: wrap;
-	/* border: solid black 1px; */
+
 
 
 }

@@ -24,16 +24,27 @@ const stage = document.querySelector('#stage')
 const avatarEl = document.querySelector('.player-avatar')
 const avatar = localStorage.getItem('playerAvatar')
 
+const startSound = new Audio('./assets/sounds/start.mp3')
+const successSound = new Audio('./assets/sounds/success.wav');
+const failSound = new Audio('./assets/sounds/fail.mp3');
+const tictacSound = new Audio('./assets/sounds/clock.mp3');
+const popSound = new Audio('./assets/sounds/pop.mp3');
+const moveSound = new Audio('./assets/sounds/moveSound.mp3');
+
+
+
+
+
 if (avatarEl) {
   avatarEl.src = avatar;
 }
 
 player.textContent = playerName;
 
-const LEVEL_GOAL = 10;
+const LEVEL_GOAL = 1;
 const LEVELS = 3
 const ROUNDS_PER_LEVEL = 3
-const ROUND_TIMES = [35, 30, 25] 
+const ROUND_TIMES = [10, 9, 8] 
 
 const ROUND_INTERVALS = [1000, 900, 800]
 
@@ -73,6 +84,8 @@ let currentTime = ROUND_TIMES[0]
 let countDownTimerId = null  // общий таймер секунд
 
 let timerId = null          
+
+let resultSound = null
 
 
 // для ур1
@@ -118,10 +131,25 @@ function saveLeader(score) {
   localStorage.setItem('leaders', JSON.stringify(leaders));
 }
 
+//звуки
+
+function playSound(sound) {
+  sound.volume = 0.5;
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function stopSound(sound) {
+  sound.pause();
+  sound.currentTime = 0;
+}
+
 
 
 
 // ------------------
+
+
 
 
 // общие ф-ии раунда
@@ -209,6 +237,7 @@ function showBanner(text) {
 
 continueBtn.addEventListener('click', ()=>{
   banner.classList.remove('visible');
+  banner.classList.remove('level-up'); 
   startLevelRound();
   countDownTimerId = setInterval(countDown, 1000);
 
@@ -225,6 +254,8 @@ exitBtn.addEventListener('click', () => {
 
 function nextRound() {
   round++;
+  resultSound = null;
+
 
   let message = "Далее: Раунд " + round;
 
@@ -239,13 +270,20 @@ function nextRound() {
 
       round = 1; // повторяем этот же уровень
       levelScore = 0; 
+      resultSound = failSound;
+      if (resultSound) {
+        resultSound.volume = 0.5;
+        playSound(resultSound);
+      }
       showBanner(`Уровень ${level} не пройден. Попробуйте ещё раз!`);
       return;
     }
     round = 1;
     level++;
     levelScore = 0;  
-    message = "Далее: Уровень " + level;
+    resultSound = successSound;
+    message = "Уровень пройден! Переход на уровень " + level;
+    banner.classList.add('level-up')
 
     // конец игры
     if (level > LEVELS) {
@@ -256,7 +294,13 @@ function nextRound() {
       return;
     }
   }
+  if (resultSound) {
+     resultSound.volume = 0.5;
+      playSound(resultSound); 
+    }
   showBanner(message);
+  
+  
 }
 
 // --------------
@@ -329,6 +373,7 @@ function level1Click(square) {
   if(shownDoll.file === targetDoll.file) {
     addScore(1);
     flash(square, 'var(--color-success)');
+    playSound(popSound);
   }
   else {
     addScore(-1);
@@ -530,6 +575,7 @@ function dropDoll(slot) {
     if (size === level2Expected[index]){
       addScore(1);
       flash(slot, 'var(--color-success)');
+      playSound(popSound);
     }
       else {
       addScore(-1);
@@ -713,10 +759,12 @@ document.addEventListener('keydown', (e) => {
 
   if (e.key === 'ArrowLeft') {
     moveLeftRight(-1);
+    playSound(moveSound)
   }
 
   if (e.key === 'ArrowRight') {
     moveLeftRight(1);
+    playSound(moveSound)
   }
 });
 
@@ -741,10 +789,16 @@ function startLevel3() {
 //общий таймер
 function countDown() {
   currentTime--
+  
   if (timeLeft) timeLeft.textContent = currentTime
 
-  if (currentTime <= 0) {
+  if(currentTime == 3){
+    tictacSound.volume = 0.5;
+    playSound(tictacSound); 
+  }
 
+  if (currentTime === 0) {
+    stopSound(tictacSound)
     nextRound()
   }
 }

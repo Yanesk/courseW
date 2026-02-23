@@ -4,6 +4,11 @@ const loginBtn = document.getElementById('loginBtn');
 const avatar = document.querySelector('.avatar');
 const avatars = document.querySelectorAll('.avatar');
 
+const startSound = new Audio('./assets/sounds/start.mp3')
+
+
+let sound = startSound;
+
 let selectedAvatar = localStorage.getItem('playerAvatar') || '';
 
 avatars.forEach(img => {
@@ -15,6 +20,19 @@ avatars.forEach(img => {
 
   });
 });
+
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+if (sound) {
+  sound.volume = 0.5;
+  playSound(sound);
+}
+
+
+
 
 function saveName() {
   const name = nameInput.value.trim();

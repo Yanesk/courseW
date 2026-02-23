@@ -1,7 +1,19 @@
 
   const list = document.getElementById('leadersList');
+  const endSound = new Audio('./assets/sounds/start.mp3')
 
-  let leaders = JSON.parse(localStorage.getItem('leaders')) || [];
+
+let leaders = JSON.parse(localStorage.getItem('leaders')) || [];
+
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+if (endSound) {
+  endSound.volume = 0.5;
+  playSound(endSound);
+}
 
   // по убыванию
   leaders.sort((a, b) => b.score - a.score);
